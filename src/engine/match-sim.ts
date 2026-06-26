@@ -1,4 +1,4 @@
-import { Team, Player, MatchResult, MatchEvent, Position } from '../types';
+import { Team, Player, MatchResult, MatchEvent, MatchStatEvent, TeamMatchStats, Position } from '../types';
 import { FORMATIONS, POSITION_GROUPS } from '../utils/constants';
 import { createRng, randomInt, weightedRandom, poissonRandom } from '../utils/random';
 import { getEffectiveOVR } from './rating';
@@ -160,6 +160,43 @@ export function simulateMatch(
 
   events.sort((a, b) => a.minute - b.minute);
 
+  // Generate stat events (after all existing RNG calls to preserve determinism)
+  const statEvents: MatchStatEvent[] = [];
+
+  function generateTeamStats(teamId: string, goals: number, yellowCards: number): TeamMatchStats {
+    const totalShots = goals * 3 + poissonRandom(rng, 4);
+    const shotsOnTarget = Math.min(totalShots, goals + randomInt(rng, 0, Math.max(0, totalShots - goals)));
+    const shotsOffTarget = totalShots - shotsOnTarget;
+    const corners = randomInt(rng, 2, 8);
+    const fouls = yellowCards * 2 + randomInt(rng, 3, 8);
+    const offsides = randomInt(rng, 0, 5);
+
+    for (let i = 0; i < shotsOnTarget; i++) {
+      statEvents.push({ minute: randomInt(rng, 1, 90), type: 'shot_on', teamId });
+    }
+    for (let i = 0; i < shotsOffTarget; i++) {
+      statEvents.push({ minute: randomInt(rng, 1, 90), type: 'shot_off', teamId });
+    }
+    for (let i = 0; i < corners; i++) {
+      statEvents.push({ minute: randomInt(rng, 1, 90), type: 'corner', teamId });
+    }
+    for (let i = 0; i < fouls; i++) {
+      statEvents.push({ minute: randomInt(rng, 1, 90), type: 'foul', teamId });
+    }
+    for (let i = 0; i < offsides; i++) {
+      statEvents.push({ minute: randomInt(rng, 1, 90), type: 'offside', teamId });
+    }
+
+    return { shotsOnTarget, shotsOffTarget, corners, fouls, offsides };
+  }
+
+  const homeYellows = events.filter(e => e.teamId === home.id && e.type === 'yellow_card').length;
+  const awayYellows = events.filter(e => e.teamId === away.id && e.type === 'yellow_card').length;
+  const homeStats = generateTeamStats(home.id, homeGoals, homeYellows);
+  const awayStats = generateTeamStats(away.id, awayGoals, awayYellows);
+
+  statEvents.sort((a, b) => a.minute - b.minute);
+
   return {
     id: '',
     week: 0,
@@ -169,5 +206,7 @@ export function simulateMatch(
     awayGoals,
     events,
     played: true,
+    stats: { home: homeStats, away: awayStats },
+    statEvents,
   };
 }

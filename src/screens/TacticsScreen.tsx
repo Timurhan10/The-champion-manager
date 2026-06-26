@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useGameStore } from '../store/game-store';
 import { Formation, Tactic } from '../types';
-import { FORMATIONS } from '../utils/constants';
 
 const FORMATION_OPTIONS: Formation[] = ['4-4-2', '4-3-3', '4-2-3-1', '3-5-2', '5-3-2'];
 const TACTIC_OPTIONS: { value: Tactic; label: string }[] = [

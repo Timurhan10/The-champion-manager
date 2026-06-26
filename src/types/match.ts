@@ -8,6 +8,22 @@ export interface MatchEvent {
   detail?: string;
 }
 
+export type StatEventType = 'shot_on' | 'shot_off' | 'corner' | 'foul' | 'offside';
+
+export interface MatchStatEvent {
+  minute: number;
+  type: StatEventType;
+  teamId: string;
+}
+
+export interface TeamMatchStats {
+  shotsOnTarget: number;
+  shotsOffTarget: number;
+  corners: number;
+  fouls: number;
+  offsides: number;
+}
+
 export interface MatchResult {
   id: string;
   week: number;
@@ -17,4 +33,6 @@ export interface MatchResult {
   awayGoals: number;
   events: MatchEvent[];
   played: boolean;
+  stats?: { home: TeamMatchStats; away: TeamMatchStats };
+  statEvents?: MatchStatEvent[];
 }

@@ -2,7 +2,6 @@ import { useGameStore } from '../store/game-store';
 import { PROMOTION_RELEGATION_COUNT } from '../utils/constants';
 
 export default function EndOfSeasonScreen() {
-  const navigate = useGameStore((s) => s.navigate);
   const leagues = useGameStore((s) => s.leagues);
   const teams = useGameStore((s) => s.teams);
   const season = useGameStore((s) => s.season);

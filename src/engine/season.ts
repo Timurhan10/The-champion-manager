@@ -54,7 +54,7 @@ export function advancePlayerAge(players: Record<string, Player>): void {
 export function updateBudgets(
   teams: Record<string, Team>,
   standings: LeagueStanding[],
-  tier: number
+  _tier: number
 ): void {
   if (standings.length === 0) return;
 

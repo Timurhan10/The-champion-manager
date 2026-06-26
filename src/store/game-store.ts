@@ -280,7 +280,7 @@ export const useGameStore = create<GameState>()(
           set((state) => {
             if (!state.season) return;
 
-            const result = handlePromotion(state.leagues, state.teams);
+            handlePromotion(state.leagues, state.teams);
             for (const league of Object.values(state.leagues)) {
               updateBudgets(
                 state.teams,
