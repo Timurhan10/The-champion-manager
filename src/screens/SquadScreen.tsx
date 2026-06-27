@@ -20,6 +20,8 @@ export default function SquadScreen() {
   const playerTeamId = useGameStore((s) => s.playerTeamId);
   const navigate = useGameStore((s) => s.navigate);
   const selectPlayer = useGameStore((s) => s.selectPlayer);
+  const simulateWeek = useGameStore((s) => s.simulateWeek);
+  const season = useGameStore((s) => s.season);
 
   if (!playerTeamId) return null;
   const team = teams[playerTeamId];
@@ -44,8 +46,18 @@ export default function SquadScreen() {
   return (
     <div className="min-h-screen bg-gray-900 p-6">
       <div className="max-w-5xl mx-auto">
-        <h1 className="text-2xl font-bold text-white mb-1">{team.name}</h1>
-        <p className="text-gray-400 text-sm mb-4">Kadro - {squadPlayers.length} Oyuncu</p>
+        <div className="flex items-center justify-between mb-1">
+          <h1 className="text-2xl font-bold text-white">{team.name}</h1>
+          {season && !season.completed && season.currentWeek <= season.totalWeeks && (
+            <button
+              onClick={() => simulateWeek()}
+              className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 px-5 rounded-lg transition-colors text-sm"
+            >
+              Maça Çık ⚽
+            </button>
+          )}
+        </div>
+        <p className="text-gray-400 text-sm mb-4">Kadro - {squadPlayers.length} Oyuncu | Hafta {season?.currentWeek ?? '-'}</p>
 
         <div className="flex flex-wrap gap-2 mb-6">
           {([

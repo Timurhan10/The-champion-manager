@@ -103,7 +103,7 @@ export function loadGameData(): {
         substituteBenchIds: [],
         tactics: { formation: '4-4-2', tactic: 'balanced' },
         transferBudget: rawTeam.transferBudget,
-        wageBudget: rawTeam.wageBudget,
+        wageBudget: Math.max(rawTeam.wageBudget, Math.round(totalWage * 1.2)),
         currentWageTotal: totalWage,
         homeAdvantage: rawTeam.homeAdvantage,
         reputation: rawTeam.reputation,

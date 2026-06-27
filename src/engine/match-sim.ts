@@ -107,22 +107,22 @@ export function simulateMatch(
     for (let i = 0; i < goals; i++) {
       const minute = randomInt(rng, 1, 90);
 
-      // Scorer weighted by shooting
       const scorer = weightedRandom(rng, teamPlayers.map(p => ({
         item: p,
         weight: p.attributes.shooting,
       })));
-      events.push({ minute, type: 'goal', playerId: scorer.id, teamId });
 
-      // Assister weighted by passing
+      let detail: string | undefined;
       const possibleAssisters = teamPlayers.filter(p => p.id !== scorer.id);
       if (possibleAssisters.length > 0) {
         const assister = weightedRandom(rng, possibleAssisters.map(p => ({
           item: p,
           weight: p.attributes.passing,
         })));
-        events.push({ minute, type: 'assist', playerId: assister.id, teamId });
+        detail = `Asist: ${assister.name}`;
       }
+
+      events.push({ minute, type: 'goal', playerId: scorer.id, teamId, detail });
     }
   }
 
