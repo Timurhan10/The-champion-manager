@@ -2,6 +2,7 @@ import { useState, useMemo } from 'react';
 import { useGameStore } from '../store/game-store';
 import { PROMOTION_RELEGATION_COUNT } from '../utils/constants';
 import TeamEmblem from '../components/TeamEmblem';
+import ScreenBackground from '../components/ScreenBackground';
 
 type ViewTab = 'standings' | 'stats';
 
@@ -45,7 +46,7 @@ export default function LeagueTableScreen() {
   }, [players]);
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-4">
+    <ScreenBackground image="7.jpeg" className="text-white p-4 min-h-screen">
       <button onClick={() => navigate('squad')} className="text-emerald-400 hover:text-emerald-300 mb-3 text-sm">
         &larr; Geri
       </button>
@@ -81,7 +82,7 @@ export default function LeagueTableScreen() {
 
       {viewTab === 'standings' && (
         <div className="flex gap-4">
-          <div className="flex-1 bg-gray-800 rounded-lg overflow-hidden">
+          <div className="flex-1 bg-gray-800/80 backdrop-blur rounded-lg overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full text-xs">
                 <thead>
@@ -138,7 +139,7 @@ export default function LeagueTableScreen() {
           </div>
 
           <div className="w-56 flex-shrink-0">
-            <div className="bg-gray-800 rounded-lg p-3">
+            <div className="bg-gray-800/80 backdrop-blur rounded-lg p-3">
               <div className="flex items-center justify-between mb-2">
                 <button
                   onClick={() => setViewWeek((w) => Math.max(1, w - 1))}
@@ -191,7 +192,7 @@ export default function LeagueTableScreen() {
 
       {viewTab === 'stats' && (
         <div className="grid grid-cols-2 gap-4">
-          <div className="bg-gray-800 rounded-lg p-3">
+          <div className="bg-gray-800/80 backdrop-blur rounded-lg p-3">
             <h2 className="text-sm font-bold mb-2 text-emerald-400">Gol Kralı</h2>
             <div className="space-y-1">
               {topScorers.length === 0 && <p className="text-gray-500 text-xs">Henüz gol atılmadı</p>}
@@ -208,7 +209,7 @@ export default function LeagueTableScreen() {
               })}
             </div>
           </div>
-          <div className="bg-gray-800 rounded-lg p-3">
+          <div className="bg-gray-800/80 backdrop-blur rounded-lg p-3">
             <h2 className="text-sm font-bold mb-2 text-blue-400">Asist Kralı</h2>
             <div className="space-y-1">
               {topAssisters.length === 0 && <p className="text-gray-500 text-xs">Henüz asist yapılmadı</p>}
@@ -227,6 +228,6 @@ export default function LeagueTableScreen() {
           </div>
         </div>
       )}
-    </div>
+    </ScreenBackground>
   );
 }

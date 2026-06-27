@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { useGameStore } from '../store/game-store';
 import { MatchEvent, MatchStatEvent } from '../types';
 import { generateCommentary, CommentaryLine } from '../utils/commentary';
+import ScreenBackground from '../components/ScreenBackground';
 
 type Speed = 'normal' | 'fast' | 'instant';
 
@@ -202,18 +203,18 @@ export default function MatchSimScreen() {
 
   if (!lastMatchResult) {
     return (
-      <div className="min-h-screen bg-gray-900 text-white p-4 flex flex-col items-center justify-center">
-        <h1 className="text-2xl font-bold mb-4">Mac Sonucu</h1>
-        <div className="bg-gray-800 rounded-lg p-8 text-center">
-          <p className="text-gray-400 text-lg mb-6">Bu hafta maciniz yok</p>
+      <ScreenBackground image="3.jpeg" className="text-white p-4 flex flex-col items-center justify-center min-h-screen">
+        <h1 className="text-xl font-bold mb-4">Mac Sonucu</h1>
+        <div className="bg-gray-800/80 backdrop-blur rounded-lg p-8 text-center">
+          <p className="text-gray-400 text-sm mb-6">Bu hafta maciniz yok</p>
           <button
             onClick={() => navigate('squad')}
-            className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-8 rounded-lg transition-colors"
+            className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-8 rounded-lg transition-colors text-sm"
           >
             Devam Et
           </button>
         </div>
-      </div>
+      </ScreenBackground>
     );
   }
 
@@ -247,7 +248,7 @@ export default function MatchSimScreen() {
   const visibleCommentary = commentary.filter(c => c.minute <= currentMinute);
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-4 max-w-lg mx-auto">
+    <ScreenBackground image="3.jpeg" className="text-white p-4 max-w-lg mx-auto min-h-screen">
       {/* Match Clock */}
       <div className="text-center mb-4">
         <div className={`inline-block px-4 py-1 rounded-full text-sm font-bold ${
@@ -258,26 +259,26 @@ export default function MatchSimScreen() {
       </div>
 
       {/* Score Header */}
-      <div className="bg-gray-800 rounded-lg p-6 mb-4">
+      <div className="bg-gray-800/80 backdrop-blur rounded-lg p-6 mb-4">
         <div className="flex items-center justify-center gap-6">
           <div className="text-center flex-1">
             <div
-              className="w-12 h-12 rounded-full mx-auto mb-2 border-2 border-gray-600"
+              className="w-10 h-10 rounded-full mx-auto mb-2 border-2 border-gray-600"
               style={{ backgroundColor: homeTeam?.colors.primary ?? '#444' }}
             />
-            <p className="font-bold text-lg">{homeTeam?.shortName ?? '?'}</p>
+            <p className="font-bold text-sm">{homeTeam?.shortName ?? '?'}</p>
           </div>
           <div className="text-center">
-            <p className="text-5xl font-bold tabular-nums">
+            <p className="text-3xl font-bold tabular-nums">
               {currentHomeGoals} <span className="text-gray-500">-</span> {currentAwayGoals}
             </p>
           </div>
           <div className="text-center flex-1">
             <div
-              className="w-12 h-12 rounded-full mx-auto mb-2 border-2 border-gray-600"
+              className="w-10 h-10 rounded-full mx-auto mb-2 border-2 border-gray-600"
               style={{ backgroundColor: awayTeam?.colors.primary ?? '#444' }}
             />
-            <p className="font-bold text-lg">{awayTeam?.shortName ?? '?'}</p>
+            <p className="font-bold text-sm">{awayTeam?.shortName ?? '?'}</p>
           </div>
         </div>
       </div>
@@ -331,7 +332,7 @@ export default function MatchSimScreen() {
       {/* Half-Time Overlay */}
       {isHalfTime && !showSubModal && (
         <div className="bg-yellow-900/30 border border-yellow-600/50 rounded-lg p-6 mb-4 text-center">
-          <h2 className="text-xl font-bold text-yellow-400 mb-2">Devre Arasi</h2>
+          <h2 className="text-sm font-bold text-yellow-400 mb-2">Devre Arasi</h2>
           <p className="text-gray-300 text-sm mb-4">
             {currentHomeGoals} - {currentAwayGoals}
           </p>
@@ -356,9 +357,9 @@ export default function MatchSimScreen() {
 
       {/* Substitution Modal */}
       {showSubModal && (
-        <div className="bg-gray-800 border border-blue-600/50 rounded-lg p-4 mb-4">
+        <div className="bg-gray-800/80 backdrop-blur border border-blue-600/50 rounded-lg p-4 mb-4">
           <div className="flex justify-between items-center mb-3">
-            <h2 className="text-lg font-bold">
+            <h2 className="text-sm font-bold">
               {subStep === 'pickOut' ? 'Cikarilacak Oyuncu' : 'Girecek Oyuncu'}
             </h2>
             <button onClick={closeSubModal} className="text-gray-400 hover:text-white text-sm">
@@ -420,8 +421,8 @@ export default function MatchSimScreen() {
 
       {/* Commentary */}
       {visibleCommentary.length > 0 && (
-        <div className="bg-gray-800 rounded-lg p-4 mb-4">
-          <h2 className="text-lg font-semibold mb-3">Anlatim</h2>
+        <div className="bg-gray-800/80 backdrop-blur rounded-lg p-4 mb-4">
+          <h2 className="text-sm font-semibold mb-3">Anlatim</h2>
           <div className="space-y-1.5 max-h-48 overflow-y-auto">
             {visibleCommentary.slice().reverse().slice(0, 15).map((c, i) => (
               <div key={i} className="flex gap-2 text-xs">
@@ -434,8 +435,8 @@ export default function MatchSimScreen() {
       )}
 
       {/* Statistics */}
-      <div className="bg-gray-800 rounded-lg p-4 mb-4">
-        <h2 className="text-lg font-semibold mb-3">Istatistikler</h2>
+      <div className="bg-gray-800/80 backdrop-blur rounded-lg p-4 mb-4">
+        <h2 className="text-sm font-semibold mb-3">Istatistikler</h2>
         <StatRow label="Topa Sahip Olma (%)" home={homePossession} away={100 - homePossession} />
         {homeRunning && awayRunning && (
           <>
@@ -450,8 +451,8 @@ export default function MatchSimScreen() {
 
       {/* Event Timeline */}
       {visibleEvents.length > 0 && (
-        <div className="bg-gray-800 rounded-lg p-4 mb-4">
-          <h2 className="text-lg font-semibold mb-3">Mac Olaylari</h2>
+        <div className="bg-gray-800/80 backdrop-blur rounded-lg p-4 mb-4">
+          <h2 className="text-sm font-semibold mb-3">Mac Olaylari</h2>
           <div className="space-y-2">
             {visibleEvents.map((event, i) => {
               const player = allPlayers[event.playerId];
@@ -476,11 +477,11 @@ export default function MatchSimScreen() {
       {isFullTime && (
         <button
           onClick={() => navigate('squad')}
-          className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-lg transition-colors"
+          className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-lg transition-colors text-sm"
         >
           Devam Et
         </button>
       )}
-    </div>
+    </ScreenBackground>
   );
 }

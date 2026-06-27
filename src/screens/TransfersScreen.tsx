@@ -4,6 +4,7 @@ import { Position } from '../types';
 import { formatMoney } from '../utils/format';
 import { POSITIONS } from '../utils/constants';
 import TeamEmblem from '../components/TeamEmblem';
+import ScreenBackground from '../components/ScreenBackground';
 
 type Tab = 'buy' | 'sell' | 'free';
 
@@ -84,15 +85,15 @@ export default function TransfersScreen() {
 
   if (!season?.transferWindowOpen) {
     return (
-      <div className="min-h-screen bg-gray-900 text-white p-4">
+      <ScreenBackground image="2.jpeg" className="text-white p-4 min-h-screen">
         <button onClick={() => navigate('squad')} className="text-emerald-400 hover:text-emerald-300 mb-4">
           &larr; Geri
         </button>
-        <h1 className="text-2xl font-bold mb-6">Transfer Merkezi</h1>
-        <div className="bg-gray-800 rounded-lg p-8 text-center">
-          <p className="text-gray-400 text-lg">Transfer penceresi kapalı</p>
+        <h1 className="text-xl font-bold mb-6">Transfer Merkezi</h1>
+        <div className="bg-gray-800/80 backdrop-blur rounded-lg p-8 text-center">
+          <p className="text-gray-400 text-sm">Transfer penceresi kapalı</p>
         </div>
-      </div>
+      </ScreenBackground>
     );
   }
 
@@ -101,11 +102,11 @@ export default function TransfersScreen() {
   const pagedList = currentList.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE);
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-4">
+    <ScreenBackground image="2.jpeg" className="text-white p-4 min-h-screen">
       <button onClick={() => navigate('squad')} className="text-emerald-400 hover:text-emerald-300 mb-4">
         &larr; Geri
       </button>
-      <h1 className="text-2xl font-bold mb-4">Transfer Merkezi</h1>
+      <h1 className="text-xl font-bold mb-4">Transfer Merkezi</h1>
 
       {team && (
         <div className="bg-gray-800 rounded-lg p-4 mb-4 flex flex-wrap gap-6">
@@ -292,6 +293,6 @@ export default function TransfersScreen() {
           </button>
         </div>
       )}
-    </div>
+    </ScreenBackground>
   );
 }

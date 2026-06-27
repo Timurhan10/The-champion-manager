@@ -45,7 +45,7 @@ export default function MainMenuScreen() {
         <div className="flex flex-col gap-3 items-center w-full max-w-xs">
           <button
             onClick={() => navigate('leagueSelect')}
-            className="w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-lg transition-colors text-lg shadow-lg"
+            className="w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-lg transition-colors text-sm shadow-lg"
           >
             Yeni Oyun
           </button>
@@ -53,7 +53,7 @@ export default function MainMenuScreen() {
           {hasSave && (
             <button
               onClick={() => { loadSavedGame(); navigate('squad'); }}
-              className="w-full py-3 bg-white/10 hover:bg-white/20 text-white font-semibold rounded-lg transition-colors text-lg border border-white/20"
+              className="w-full py-3 bg-white/10 hover:bg-white/20 text-white font-semibold rounded-lg transition-colors text-sm border border-white/20"
             >
               Devam Et
             </button>
@@ -61,14 +61,14 @@ export default function MainMenuScreen() {
 
           <button
             onClick={comingSoon}
-            className="w-full py-3 bg-white/5 text-white/40 font-semibold rounded-lg text-lg border border-white/10 cursor-not-allowed"
+            className="w-full py-3 bg-white/5 text-white/40 font-semibold rounded-lg text-sm border border-white/10 cursor-not-allowed"
           >
             Çoklu Oyun
           </button>
 
           <button
             onClick={comingSoon}
-            className="w-full py-3 bg-white/5 text-white/40 font-semibold rounded-lg text-lg border border-white/10 cursor-not-allowed"
+            className="w-full py-3 bg-white/5 text-white/40 font-semibold rounded-lg text-sm border border-white/10 cursor-not-allowed"
           >
             Hesap Girişi
           </button>

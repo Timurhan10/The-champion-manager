@@ -2,6 +2,7 @@ import { useGameStore } from '../store/game-store';
 import superligData from '../data/superlig-teams.json';
 import birincligData from '../data/birinclig-teams.json';
 import { formatMoney } from '../utils/format';
+import ScreenBackground from '../components/ScreenBackground';
 
 interface RawTeam {
   id: string;
@@ -30,7 +31,7 @@ export default function TeamSelectScreen() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 p-8">
+    <ScreenBackground image="6.jpeg" className="p-8">
       <div className="max-w-5xl mx-auto">
         <button
           onClick={() => navigate('leagueSelect')}
@@ -38,15 +39,15 @@ export default function TeamSelectScreen() {
         >
           ← Geri
         </button>
-        <h1 className="text-3xl font-bold text-white mb-2">Takım Seçimi</h1>
-        <p className="text-gray-400 mb-8">{data.leagueName}</p>
+        <h1 className="text-xl font-bold text-white mb-2">Takım Seçimi</h1>
+        <p className="text-gray-400 text-sm mb-8">{data.leagueName}</p>
 
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
           {teams.map((team) => (
             <button
               key={team.id}
               onClick={() => handleSelect(team.id)}
-              className="bg-gray-800 rounded-lg p-4 text-left hover:ring-2 hover:ring-emerald-500 transition-all"
+              className="bg-gray-800/80 backdrop-blur rounded-lg p-4 text-left hover:ring-2 hover:ring-emerald-500 transition-all"
             >
               <div
                 className="h-1.5 rounded-full mb-3"
@@ -67,6 +68,6 @@ export default function TeamSelectScreen() {
           ))}
         </div>
       </div>
-    </div>
+    </ScreenBackground>
   );
 }

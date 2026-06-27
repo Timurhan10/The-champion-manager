@@ -3,6 +3,7 @@ import { useGameStore } from '../store/game-store';
 import { formatMoney } from '../utils/format';
 import { TACTIC_DEFINITIONS } from '../engine/tactics';
 import TeamEmblem from '../components/TeamEmblem';
+import ScreenBackground from '../components/ScreenBackground';
 
 export default function TeamViewScreen() {
   const navigate = useGameStore((s) => s.navigate);
@@ -37,7 +38,7 @@ export default function TeamViewScreen() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-4">
+    <ScreenBackground image="1.jpeg" className="text-white p-4 min-h-screen">
       <button onClick={() => navigate('leagueTable')} className="text-emerald-400 hover:text-emerald-300 mb-3 text-sm">
         &larr; Geri
       </button>
@@ -114,6 +115,6 @@ export default function TeamViewScreen() {
           </table>
         </div>
       </div>
-    </div>
+    </ScreenBackground>
   );
 }

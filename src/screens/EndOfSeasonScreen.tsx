@@ -1,5 +1,6 @@
 import { useGameStore } from '../store/game-store';
 import { PROMOTION_RELEGATION_COUNT } from '../utils/constants';
+import ScreenBackground from '../components/ScreenBackground';
 
 export default function EndOfSeasonScreen() {
   const leagues = useGameStore((s) => s.leagues);
@@ -31,23 +32,23 @@ export default function EndOfSeasonScreen() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-4">
-      <h1 className="text-2xl font-bold mb-2">Sezon Sonu {season?.year}</h1>
+    <ScreenBackground image="9.jpeg" className="text-white p-4">
+      <h1 className="text-xl font-bold mb-2">Sezon Sonu {season?.year}</h1>
 
       {championTeam && (
-        <div className="bg-gray-800 rounded-lg p-6 mb-6 text-center">
-          <p className="text-4xl mb-2">🏆</p>
-          <h2 className="text-2xl font-bold text-emerald-400 mb-1">{championTeam.name}</h2>
-          <p className="text-gray-400">Süper Lig Şampiyonu</p>
+        <div className="bg-gray-800/80 backdrop-blur rounded-lg p-6 mb-6 text-center">
+          <p className="text-2xl mb-2">🏆</p>
+          <h2 className="text-xl font-bold text-emerald-400 mb-1">{championTeam.name}</h2>
+          <p className="text-gray-400 text-sm">Süper Lig Şampiyonu</p>
         </div>
       )}
 
       {promotedIds.length > 0 && (
-        <div className="bg-gray-800 rounded-lg p-4 mb-4">
-          <h3 className="font-semibold mb-3 text-green-400">Yükselen Takımlar</h3>
+        <div className="bg-gray-800/80 backdrop-blur rounded-lg p-4 mb-4">
+          <h3 className="font-semibold mb-3 text-green-400 text-sm">Yükselen Takımlar</h3>
           <div className="space-y-2">
             {promotedIds.map((id) => (
-              <div key={id} className="flex items-center gap-2">
+              <div key={id} className="flex items-center gap-2 text-xs">
                 <span className="text-green-400">⬆️</span>
                 <span className="bg-green-900/40 text-green-300 px-3 py-1 rounded font-medium">
                   {teams[id]?.name ?? '?'}
@@ -59,11 +60,11 @@ export default function EndOfSeasonScreen() {
       )}
 
       {relegatedIds.length > 0 && (
-        <div className="bg-gray-800 rounded-lg p-4 mb-4">
-          <h3 className="font-semibold mb-3 text-red-400">Düşen Takımlar</h3>
+        <div className="bg-gray-800/80 backdrop-blur rounded-lg p-4 mb-4">
+          <h3 className="font-semibold mb-3 text-red-400 text-sm">Düşen Takımlar</h3>
           <div className="space-y-2">
             {relegatedIds.map((id) => (
-              <div key={id} className="flex items-center gap-2">
+              <div key={id} className="flex items-center gap-2 text-xs">
                 <span className="text-red-400">⬇️</span>
                 <span className="bg-red-900/40 text-red-300 px-3 py-1 rounded font-medium">
                   {teams[id]?.name ?? '?'}
@@ -75,40 +76,40 @@ export default function EndOfSeasonScreen() {
       )}
 
       {playerStanding && playerTeam && (
-        <div className="bg-gray-800 rounded-lg p-4 mb-6">
-          <h3 className="font-semibold mb-3 text-emerald-400">Takımınız: {playerTeam.name}</h3>
-          <div className="grid grid-cols-2 gap-3 text-sm">
+        <div className="bg-gray-800/80 backdrop-blur rounded-lg p-4 mb-6">
+          <h3 className="font-semibold mb-3 text-emerald-400 text-sm">Takımınız: {playerTeam.name}</h3>
+          <div className="grid grid-cols-2 gap-3 text-xs">
             <div className="bg-gray-700/50 rounded p-3">
               <p className="text-gray-400">Sıralama</p>
-              <p className="text-xl font-bold">{(playerRank ?? 0) + 1}.</p>
+              <p className="text-sm font-bold">{(playerRank ?? 0) + 1}.</p>
             </div>
             <div className="bg-gray-700/50 rounded p-3">
               <p className="text-gray-400">Puan</p>
-              <p className="text-xl font-bold text-emerald-400">{playerStanding.points}</p>
+              <p className="text-sm font-bold text-emerald-400">{playerStanding.points}</p>
             </div>
             <div className="bg-gray-700/50 rounded p-3">
               <p className="text-gray-400">Galibiyet</p>
-              <p className="text-xl font-bold text-green-400">{playerStanding.won}</p>
+              <p className="text-sm font-bold text-green-400">{playerStanding.won}</p>
             </div>
             <div className="bg-gray-700/50 rounded p-3">
               <p className="text-gray-400">Beraberlik</p>
-              <p className="text-xl font-bold text-yellow-400">{playerStanding.drawn}</p>
+              <p className="text-sm font-bold text-yellow-400">{playerStanding.drawn}</p>
             </div>
             <div className="bg-gray-700/50 rounded p-3">
               <p className="text-gray-400">Mağlubiyet</p>
-              <p className="text-xl font-bold text-red-400">{playerStanding.lost}</p>
+              <p className="text-sm font-bold text-red-400">{playerStanding.lost}</p>
             </div>
             <div className="bg-gray-700/50 rounded p-3">
               <p className="text-gray-400">Atılan Goller</p>
-              <p className="text-xl font-bold">{playerStanding.goalsFor}</p>
+              <p className="text-sm font-bold">{playerStanding.goalsFor}</p>
             </div>
           </div>
         </div>
       )}
 
-      <div className="bg-gray-800 rounded-lg overflow-hidden mb-6">
-        <h3 className="font-semibold p-4 border-b border-gray-700">Final Puan Tablosu - {superLig?.name}</h3>
-        <table className="w-full text-sm">
+      <div className="bg-gray-800/80 backdrop-blur rounded-lg overflow-hidden mb-6">
+        <h3 className="font-semibold p-4 border-b border-gray-700 text-sm">Final Puan Tablosu - {superLig?.name}</h3>
+        <table className="w-full text-xs">
           <thead>
             <tr className="border-b border-gray-700 text-gray-400">
               <th className="p-2 text-left w-8">#</th>
@@ -141,10 +142,10 @@ export default function EndOfSeasonScreen() {
 
       <button
         onClick={handleAdvance}
-        className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-lg transition-colors"
+        className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-lg transition-colors text-sm"
       >
         Yeni Sezon Başlat
       </button>
-    </div>
+    </ScreenBackground>
   );
 }

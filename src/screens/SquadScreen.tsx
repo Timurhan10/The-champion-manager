@@ -5,6 +5,7 @@ import { POSITION_GROUPS, FORMATIONS } from '../utils/constants';
 import { TACTIC_DEFINITIONS, calculateTacticFit } from '../engine/tactics';
 import type { Player, Position, Formation, Tactic, Notification } from '../types';
 import type { TrainingType } from '../engine/training';
+import ScreenBackground from '../components/ScreenBackground';
 
 const POS_ORDER: Record<string, number> = { goalkeeper: 0, defense: 1, midfield: 2, attack: 3 };
 
@@ -498,7 +499,7 @@ export default function SquadScreen() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-900 p-4">
+    <ScreenBackground image="4.jpeg" className="p-4 min-h-screen">
       <div className="max-w-5xl mx-auto">
         <div className="flex items-center justify-between mb-1">
           <h1 className="text-xl font-bold text-white">{team.name}</h1>
@@ -559,6 +560,6 @@ export default function SquadScreen() {
           </div>
         </div>
       </div>
-    </div>
+    </ScreenBackground>
   );
 }
