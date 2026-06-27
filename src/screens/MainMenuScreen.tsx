@@ -1,4 +1,5 @@
 import { useGameStore } from '../store/game-store';
+import coverImg from '/cover1.jpg?url';
 
 export default function MainMenuScreen() {
   const navigate = useGameStore((s) => s.navigate);
@@ -8,7 +9,7 @@ export default function MainMenuScreen() {
   return (
     <div
       className="min-h-screen flex items-center justify-center bg-cover bg-center bg-no-repeat relative"
-      style={{ backgroundImage: "url('/cover1.jpg')" }}
+      style={{ backgroundImage: `url(${coverImg})` }}
     >
       <div className="absolute inset-0 bg-black/60" />
       <div className="relative z-10 text-center space-y-8">
