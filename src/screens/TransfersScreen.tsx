@@ -86,12 +86,18 @@ export default function TransfersScreen() {
   if (!season?.transferWindowOpen) {
     return (
       <ScreenBackground image="2.jpeg" className="text-white p-4 min-h-screen">
-        <button onClick={() => navigate('squad')} className="text-emerald-400 hover:text-emerald-300 mb-4">
-          &larr; Geri
-        </button>
-        <h1 className="text-xl font-bold mb-6">Transfer Merkezi</h1>
-        <div className="bg-gray-800/80 backdrop-blur rounded-lg p-8 text-center">
-          <p className="text-gray-400 text-sm">Transfer penceresi kapalı</p>
+        <div className="max-w-5xl mx-auto">
+          <div className="flex items-center justify-between mb-1">
+            <h1 className="text-xl font-bold">Transfer Merkezi</h1>
+          </div>
+          <p className="text-gray-400 text-xs mb-3">Transfer penceresi kapalı</p>
+          <div className="flex gap-2 mb-4">
+            <button onClick={() => navigate('squad')} className="px-3 py-1.5 bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs rounded-lg transition-colors">Kadro</button>
+            <button onClick={() => navigate('leagueTable')} className="px-3 py-1.5 bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs rounded-lg transition-colors">Puan Durumu</button>
+          </div>
+          <div className="bg-gray-800/80 backdrop-blur rounded-lg p-8 text-center">
+            <p className="text-gray-400 text-sm">Transfer penceresi kapalı</p>
+          </div>
         </div>
       </ScreenBackground>
     );
@@ -103,41 +109,39 @@ export default function TransfersScreen() {
 
   return (
     <ScreenBackground image="2.jpeg" className="text-white p-4 min-h-screen">
-      <button onClick={() => navigate('squad')} className="text-emerald-400 hover:text-emerald-300 mb-4">
-        &larr; Geri
-      </button>
-      <h1 className="text-xl font-bold mb-4">Transfer Merkezi</h1>
-
-      {team && (
-        <div className="bg-gray-800 rounded-lg p-4 mb-4 flex flex-wrap gap-6">
-          <div>
-            <span className="text-gray-400 text-sm">Bütçe</span>
-            <p className="text-emerald-400 font-bold text-lg">{formatMoney(team.transferBudget)}</p>
-          </div>
-          <div>
-            <span className="text-gray-400 text-sm">Maaş Bütçesi</span>
-            <p className="text-white font-bold text-lg">{formatMoney(team.wageBudget)}</p>
-          </div>
-          <div>
-            <span className="text-gray-400 text-sm">Mevcut Maaşlar</span>
-            <p className="text-white font-bold text-lg">{formatMoney(team.currentWageTotal)}</p>
-          </div>
+      <div className="max-w-5xl mx-auto">
+        <div className="flex items-center justify-between mb-1">
+          <h1 className="text-xl font-bold">Transfer Merkezi</h1>
+          {team && (
+            <div className="flex gap-4 text-xs">
+              <span><span className="text-gray-400">Bütçe:</span> <span className="text-emerald-400 font-bold">{formatMoney(team.transferBudget)}</span></span>
+              <span><span className="text-gray-400">Maaş:</span> <span className="text-white font-bold">{formatMoney(team.wageBudget)}</span></span>
+              <span><span className="text-gray-400">Mevcut:</span> <span className="text-white font-bold">{formatMoney(team.currentWageTotal)}</span></span>
+            </div>
+          )}
         </div>
-      )}
+        <p className="text-gray-400 text-xs mb-3">
+          {team?.name ?? ''} | Transfer Penceresi Açık
+        </p>
 
-      <div className="flex gap-2 mb-4">
-        {([['buy', 'Satın Al'], ['sell', 'Sat'], ['free', 'Serbest Oyuncular']] as const).map(([key, label]) => (
-          <button
-            key={key}
-            onClick={() => { setTab(key); setPage(0); }}
-            className={`px-4 py-2 rounded font-medium transition-colors ${
-              tab === key ? 'bg-emerald-600 text-white' : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-            }`}
-          >
-            {label}
-          </button>
-        ))}
-      </div>
+        <div className="flex gap-2 mb-4">
+          <button onClick={() => navigate('squad')} className="px-3 py-1.5 bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs rounded-lg transition-colors">Kadro</button>
+          <button onClick={() => navigate('leagueTable')} className="px-3 py-1.5 bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs rounded-lg transition-colors">Puan Durumu</button>
+        </div>
+
+        <div className="flex border-b border-gray-700 mb-4">
+          {([['buy', 'Satın Al'], ['sell', 'Sat'], ['free', 'Serbest Oyuncular']] as const).map(([key, label]) => (
+            <button
+              key={key}
+              onClick={() => { setTab(key); setPage(0); }}
+              className={`px-4 py-2 text-sm font-medium transition-colors border-b-2 ${
+                tab === key ? 'text-emerald-400 border-emerald-400' : 'text-gray-400 border-transparent hover:text-gray-300'
+              }`}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
 
       {tab === 'buy' && (
         <div className="mb-4 flex flex-wrap gap-2 items-center">
@@ -293,6 +297,7 @@ export default function TransfersScreen() {
           </button>
         </div>
       )}
+      </div>
     </ScreenBackground>
   );
 }

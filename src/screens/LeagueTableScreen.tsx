@@ -47,38 +47,60 @@ export default function LeagueTableScreen() {
 
   return (
     <ScreenBackground image="7.jpeg" className="text-white p-4 min-h-screen">
-      <button onClick={() => navigate('squad')} className="text-emerald-400 hover:text-emerald-300 mb-3 text-sm">
-        &larr; Geri
-      </button>
-      <h1 className="text-xl font-bold mb-3">Puan Durumu</h1>
+      <div className="max-w-5xl mx-auto">
+        <div className="flex items-center justify-between mb-1">
+          <h1 className="text-xl font-bold">Puan Durumu</h1>
+          <div className="flex gap-1">
+            {leagueList.map((l) => (
+              <button
+                key={l.id}
+                onClick={() => setSelectedLeagueId(l.id)}
+                className={`px-3 py-1.5 rounded text-xs font-medium transition-colors ${
+                  selectedLeagueId === l.id ? 'bg-emerald-600 text-white' : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                }`}
+              >
+                {l.name}
+              </button>
+            ))}
+          </div>
+        </div>
+        <p className="text-gray-400 text-xs mb-3">
+          {league?.name ?? ''} | Hafta {currentWeek} / {totalWeeks}
+        </p>
 
-      <div className="flex gap-2 mb-3">
-        {leagueList.map((l) => (
+        <div className="flex gap-2 mb-4">
           <button
-            key={l.id}
-            onClick={() => setSelectedLeagueId(l.id)}
-            className={`px-3 py-1.5 rounded text-xs font-medium transition-colors ${
-              selectedLeagueId === l.id ? 'bg-emerald-600 text-white' : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-            }`}
+            onClick={() => navigate('squad')}
+            className="px-3 py-1.5 bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs rounded-lg transition-colors"
           >
-            {l.name}
+            Kadro
           </button>
-        ))}
-        <div className="ml-auto flex gap-1">
+          <button
+            onClick={() => navigate('transfers')}
+            className="px-3 py-1.5 bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs rounded-lg transition-colors"
+          >
+            Transfer
+          </button>
+        </div>
+
+        <div className="flex border-b border-gray-700 mb-4">
           <button
             onClick={() => setViewTab('standings')}
-            className={`px-3 py-1.5 rounded text-xs font-medium ${viewTab === 'standings' ? 'bg-emerald-600' : 'bg-gray-700 hover:bg-gray-600'}`}
+            className={`px-4 py-2 text-sm font-medium transition-colors border-b-2 ${
+              viewTab === 'standings' ? 'text-emerald-400 border-emerald-400' : 'text-gray-400 border-transparent hover:text-gray-300'
+            }`}
           >
             Tablo
           </button>
           <button
             onClick={() => setViewTab('stats')}
-            className={`px-3 py-1.5 rounded text-xs font-medium ${viewTab === 'stats' ? 'bg-emerald-600' : 'bg-gray-700 hover:bg-gray-600'}`}
+            className={`px-4 py-2 text-sm font-medium transition-colors border-b-2 ${
+              viewTab === 'stats' ? 'text-emerald-400 border-emerald-400' : 'text-gray-400 border-transparent hover:text-gray-300'
+            }`}
           >
             İstatistikler
           </button>
         </div>
-      </div>
 
       {viewTab === 'standings' && (
         <div className="flex gap-4">
@@ -228,6 +250,7 @@ export default function LeagueTableScreen() {
           </div>
         </div>
       )}
+      </div>
     </ScreenBackground>
   );
 }
