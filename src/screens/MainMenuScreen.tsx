@@ -6,13 +6,16 @@ export default function MainMenuScreen() {
   const hasSave = localStorage.getItem('champion-manager-save') !== null;
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 flex items-center justify-center">
-      <div className="text-center space-y-8">
-        <div className="text-6xl">⚽</div>
-        <h1 className="text-5xl font-bold text-white tracking-tight">
+    <div
+      className="min-h-screen flex items-center justify-center bg-cover bg-center bg-no-repeat relative"
+      style={{ backgroundImage: "url('/cover1.jpg')" }}
+    >
+      <div className="absolute inset-0 bg-black/60" />
+      <div className="relative z-10 text-center space-y-8">
+        <h1 className="text-5xl font-bold text-white tracking-tight drop-shadow-lg">
           The Champion Manager
         </h1>
-        <p className="text-gray-400 text-lg">Türkiye Futbol Menajerlik Oyunu</p>
+        <p className="text-gray-300 text-lg drop-shadow">Türkiye Futbol Menajerlik Oyunu</p>
 
         <div className="flex flex-col gap-4 items-center pt-4">
           <button
