@@ -3,11 +3,12 @@ import { useGameStore } from '../store/game-store';
 import { formatMoney } from '../utils/format';
 import { POSITION_GROUPS, FORMATIONS } from '../utils/constants';
 import { TACTIC_DEFINITIONS, calculateTacticFit } from '../engine/tactics';
-import type { Player, Position, Formation, Tactic } from '../types';
+import type { Player, Position, Formation, Tactic, Notification } from '../types';
+import type { TrainingType } from '../engine/training';
 
 const POS_ORDER: Record<string, number> = { goalkeeper: 0, defense: 1, midfield: 2, attack: 3 };
 
-type Tab = 'kadro' | 'ilk11' | 'taktik';
+type Tab = 'kadro' | 'ilk11' | 'taktik' | 'antrenman';
 
 const PITCH_ROWS: Record<string, number[][]> = {
   '4-4-2': [[0], [1, 2, 3, 4], [5, 6, 7, 8], [9, 10]],
@@ -68,6 +69,43 @@ function FitBar({ value }: { value: number }) {
   return <span className={`text-xs font-bold ${color}`}>%{pct} Uyum</span>;
 }
 
+function NotificationPanel({ notifications, onRead }: { notifications: Notification[]; onRead: (id: string) => void }) {
+  const [open, setOpen] = useState(false);
+  const unreadCount = notifications.filter(n => !n.read).length;
+
+  const typeIcon: Record<string, string> = { transfer: '🔄', injury: '🤕', info: 'ℹ️' };
+
+  return (
+    <div className="bg-gray-800 rounded-lg p-3">
+      <button onClick={() => setOpen(!open)} className="flex items-center gap-2 w-full text-left">
+        <span className="text-sm font-semibold text-white">Bildirimler</span>
+        {unreadCount > 0 && (
+          <span className="bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">{unreadCount}</span>
+        )}
+      </button>
+      {open && (
+        <div className="mt-2 max-h-60 overflow-y-auto space-y-1">
+          {notifications.length === 0 && <p className="text-gray-500 text-xs text-center py-2">Bildirim yok</p>}
+          {notifications.slice().reverse().slice(0, 30).map(n => (
+            <button
+              key={n.id}
+              onClick={() => onRead(n.id)}
+              className={`w-full text-left p-2 rounded text-xs transition-colors ${n.read ? 'bg-gray-700/30 text-gray-500' : 'bg-gray-700 text-white'}`}
+            >
+              <div className="flex items-center gap-1.5">
+                <span>{typeIcon[n.type] ?? ''}</span>
+                <span className="font-medium">{n.title}</span>
+                <span className="text-gray-500 ml-auto text-[10px]">H{n.week}</span>
+              </div>
+              <p className="text-[10px] mt-0.5 text-gray-400">{n.message}</p>
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 function KadroTab({ onPlayerClick }: { onPlayerClick: (p: Player) => void }) {
   const players = useGameStore((s) => s.players);
   const teams = useGameStore((s) => s.teams);
@@ -98,6 +136,9 @@ function KadroTab({ onPlayerClick }: { onPlayerClick: (p: Player) => void }) {
             <th className="p-2">Mevki</th>
             <th className="p-2 text-center">OVR</th>
             <th className="p-2 text-center">Yaş</th>
+            <th className="p-2 text-center">G</th>
+            <th className="p-2 text-center">A</th>
+            <th className="p-2 text-center">M</th>
             <th className="p-2">Kond.</th>
             <th className="p-2 text-right">Maaş</th>
           </tr>
@@ -118,6 +159,9 @@ function KadroTab({ onPlayerClick }: { onPlayerClick: (p: Player) => void }) {
               <td className="p-2 text-gray-300">{p.position}</td>
               <td className="p-2 text-center text-white font-bold">{p.overallRating}</td>
               <td className="p-2 text-center text-gray-300">{p.age}</td>
+              <td className="p-2 text-center text-gray-300">{p.seasonStats.goals || '-'}</td>
+              <td className="p-2 text-center text-gray-300">{p.seasonStats.assists || '-'}</td>
+              <td className="p-2 text-center text-gray-300">{p.seasonStats.matchesPlayed || '-'}</td>
               <td className="p-2"><StaminaBar value={p.currentStamina} /></td>
               <td className="p-2 text-right text-gray-300">{formatMoney(p.wage)}/h</td>
             </tr>
@@ -366,6 +410,65 @@ function TaktikTab() {
   );
 }
 
+function AntrenmanTab() {
+  const season = useGameStore((s) => s.season);
+  const performTraining = useGameStore((s) => s.performTraining);
+  const lastTrainingResults = useGameStore((s) => s.lastTrainingResults);
+  const players = useGameStore((s) => s.players);
+
+  const trained = season?.trainedThisWeek ?? false;
+
+  const trainingOptions: { type: TrainingType; name: string; desc: string; attrs: string }[] = [
+    { type: 'tactic', name: 'Taktik Antrenman', desc: 'Mevcut taktiğe uygun özellikler gelişir', attrs: 'Taktik ağırlıklarına göre' },
+    { type: 'physical', name: 'Fizik Antrenman', desc: 'Fiziksel özellikler gelişir', attrs: 'Hız, Fizik, Dayanıklılık' },
+    { type: 'technical', name: 'Teknik Antrenman', desc: 'Teknik özellikler gelişir', attrs: 'Şut, Pas, Dribling' },
+    { type: 'defensive', name: 'Savunma Antrenman', desc: 'Savunma özellikleri gelişir', attrs: 'Savunma, Zeka' },
+  ];
+
+  return (
+    <div>
+      <h3 className="text-white text-sm font-semibold mb-3">Haftalık Antrenman</h3>
+      {trained && (
+        <div className="bg-emerald-900/30 border border-emerald-700/50 rounded-lg p-3 mb-4">
+          <p className="text-emerald-400 text-xs font-medium mb-2">Bu hafta antrenman yapıldı!</p>
+          {lastTrainingResults.length > 0 && (
+            <div className="space-y-1 max-h-40 overflow-y-auto">
+              {lastTrainingResults.map(r => {
+                const p = players[r.playerId];
+                if (!p) return null;
+                return (
+                  <div key={r.playerId} className="text-[10px] text-gray-300 flex gap-2">
+                    <span className="text-white font-medium">{p.name}:</span>
+                    {Object.entries(r.changes).map(([attr, val]) => (
+                      <span key={attr} className="text-emerald-400">+{val} {attr}</span>
+                    ))}
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </div>
+      )}
+      <div className="grid grid-cols-2 gap-2">
+        {trainingOptions.map(opt => (
+          <button
+            key={opt.type}
+            onClick={() => !trained && performTraining(opt.type)}
+            disabled={trained}
+            className={`p-3 rounded-lg text-left transition-colors ${
+              trained ? 'bg-gray-800 opacity-50 cursor-not-allowed' : 'bg-gray-800 hover:bg-gray-700 cursor-pointer'
+            }`}
+          >
+            <div className="text-white text-xs font-semibold mb-1">{opt.name}</div>
+            <p className="text-gray-400 text-[10px] mb-1">{opt.desc}</p>
+            <p className="text-emerald-400 text-[10px]">{opt.attrs}</p>
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function SquadScreen() {
   const teams = useGameStore((s) => s.teams);
   const playerTeamId = useGameStore((s) => s.playerTeamId);
@@ -373,6 +476,8 @@ export default function SquadScreen() {
   const selectPlayer = useGameStore((s) => s.selectPlayer);
   const simulateWeek = useGameStore((s) => s.simulateWeek);
   const season = useGameStore((s) => s.season);
+  const notifications = useGameStore((s) => s.notifications);
+  const markNotificationRead = useGameStore((s) => s.markNotificationRead);
 
   const [activeTab, setActiveTab] = useState<Tab>('kadro');
 
@@ -389,6 +494,7 @@ export default function SquadScreen() {
     { id: 'kadro', label: 'Kadro' },
     { id: 'ilk11', label: 'İlk 11' },
     { id: 'taktik', label: 'Taktik' },
+    { id: 'antrenman', label: 'Antrenman' },
   ];
 
   return (
@@ -424,25 +530,34 @@ export default function SquadScreen() {
           </button>
         </div>
 
-        <div className="flex border-b border-gray-700 mb-4">
-          {tabs.map((t) => (
-            <button
-              key={t.id}
-              onClick={() => setActiveTab(t.id)}
-              className={`px-4 py-2 text-sm font-medium transition-colors border-b-2 ${
-                activeTab === t.id
-                  ? 'text-emerald-400 border-emerald-400'
-                  : 'text-gray-400 border-transparent hover:text-gray-300'
-              }`}
-            >
-              {t.label}
-            </button>
-          ))}
-        </div>
+        <div className="flex gap-4">
+          <div className="flex-1">
+            <div className="flex border-b border-gray-700 mb-4">
+              {tabs.map((t) => (
+                <button
+                  key={t.id}
+                  onClick={() => setActiveTab(t.id)}
+                  className={`px-4 py-2 text-sm font-medium transition-colors border-b-2 ${
+                    activeTab === t.id
+                      ? 'text-emerald-400 border-emerald-400'
+                      : 'text-gray-400 border-transparent hover:text-gray-300'
+                  }`}
+                >
+                  {t.label}
+                </button>
+              ))}
+            </div>
 
-        {activeTab === 'kadro' && <KadroTab onPlayerClick={handlePlayerClick} />}
-        {activeTab === 'ilk11' && <Ilk11Tab />}
-        {activeTab === 'taktik' && <TaktikTab />}
+            {activeTab === 'kadro' && <KadroTab onPlayerClick={handlePlayerClick} />}
+            {activeTab === 'ilk11' && <Ilk11Tab />}
+            {activeTab === 'taktik' && <TaktikTab />}
+            {activeTab === 'antrenman' && <AntrenmanTab />}
+          </div>
+
+          <div className="w-56 flex-shrink-0">
+            <NotificationPanel notifications={notifications} onRead={markNotificationRead} />
+          </div>
+        </div>
       </div>
     </div>
   );

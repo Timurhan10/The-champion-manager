@@ -7,4 +7,5 @@ export interface Season {
   fixtures: MatchResult[];
   transferWindowOpen: boolean;
   completed: boolean;
+  trainedThisWeek: boolean;
 }

@@ -11,6 +11,13 @@ export interface PlayerAttributes {
   intelligence: number;
 }
 
+export interface SeasonStats {
+  goals: number;
+  assists: number;
+  yellowCards: number;
+  matchesPlayed: number;
+}
+
 export interface Player {
   id: string;
   name: string;
@@ -26,4 +33,6 @@ export interface Player {
   teamId: string | null;
   injured: boolean;
   injuryWeeks: number;
+  consecutiveStarts: number;
+  seasonStats: SeasonStats;
 }

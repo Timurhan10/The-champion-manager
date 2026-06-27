@@ -1,6 +1,7 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { useGameStore } from '../store/game-store';
 import { MatchEvent, MatchStatEvent } from '../types';
+import { generateCommentary, CommentaryLine } from '../utils/commentary';
 
 type Speed = 'normal' | 'fast' | 'instant';
 
@@ -76,11 +77,30 @@ export default function MatchSimScreen() {
   const [activeBench, setActiveBench] = useState<string[]>([]);
 
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const minuteRef = useRef(currentMinute);
-  minuteRef.current = currentMinute;
 
   const isPlayerMatch = lastMatchResult &&
     (lastMatchResult.homeTeamId === playerTeamId || lastMatchResult.awayTeamId === playerTeamId);
+
+  const homeTeam = lastMatchResult ? teams[lastMatchResult.homeTeamId] : null;
+  const awayTeam = lastMatchResult ? teams[lastMatchResult.awayTeamId] : null;
+
+  const commentary = useMemo<CommentaryLine[]>(() => {
+    if (!lastMatchResult || !homeTeam || !awayTeam) return [];
+    const playerNames: Record<string, string> = {};
+    for (const e of lastMatchResult.events) {
+      if (allPlayers[e.playerId]) playerNames[e.playerId] = allPlayers[e.playerId].name;
+    }
+    return generateCommentary(
+      lastMatchResult.events,
+      lastMatchResult.statEvents ?? [],
+      homeTeam.shortName,
+      awayTeam.shortName,
+      lastMatchResult.homeTeamId,
+      playerNames,
+      lastMatchResult.homeGoals,
+      lastMatchResult.awayGoals
+    );
+  }, [lastMatchResult, homeTeam, awayTeam, allPlayers]);
 
   useEffect(() => {
     if (!lastMatchResult) return;
@@ -197,9 +217,6 @@ export default function MatchSimScreen() {
     );
   }
 
-  const homeTeam = teams[lastMatchResult.homeTeamId];
-  const awayTeam = teams[lastMatchResult.awayTeamId];
-
   const visibleEvents = localEvents.filter((e) => e.minute <= currentMinute);
   const currentHomeGoals = visibleEvents.filter(
     (e) => e.type === 'goal' && e.teamId === lastMatchResult.homeTeamId
@@ -226,6 +243,8 @@ export default function MatchSimScreen() {
   const awayRunning = hasStatEvents
     ? computeRunningStats(lastMatchResult.statEvents!, lastMatchResult.awayTeamId, currentMinute)
     : null;
+
+  const visibleCommentary = commentary.filter(c => c.minute <= currentMinute);
 
   return (
     <div className="min-h-screen bg-gray-900 text-white p-4 max-w-lg mx-auto">
@@ -304,7 +323,7 @@ export default function MatchSimScreen() {
                 : 'bg-blue-600 hover:bg-blue-700'
             }`}
           >
-            🔄 Oyuncu Degisikligi ({substitutionsMade}/3)
+            Oyuncu Degisikligi ({substitutionsMade}/3)
           </button>
         </div>
       )}
@@ -322,7 +341,7 @@ export default function MatchSimScreen() {
                 onClick={openSubModal}
                 className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors text-sm"
               >
-                🔄 Degisiklik Yap
+                Degisiklik Yap
               </button>
             )}
             <button
@@ -396,6 +415,21 @@ export default function MatchSimScreen() {
               })}
             </div>
           )}
+        </div>
+      )}
+
+      {/* Commentary */}
+      {visibleCommentary.length > 0 && (
+        <div className="bg-gray-800 rounded-lg p-4 mb-4">
+          <h2 className="text-lg font-semibold mb-3">Anlatim</h2>
+          <div className="space-y-1.5 max-h-48 overflow-y-auto">
+            {visibleCommentary.slice().reverse().slice(0, 15).map((c, i) => (
+              <div key={i} className="flex gap-2 text-xs">
+                <span className="text-gray-500 w-8 shrink-0 text-right">{c.minute}&apos;</span>
+                <span className="text-gray-300">{c.text}</span>
+              </div>
+            ))}
+          </div>
         </div>
       )}
 

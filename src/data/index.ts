@@ -85,6 +85,8 @@ export function loadGameData(): {
           teamId: rawTeam.id,
           injured: false,
           injuryWeeks: 0,
+          consecutiveStarts: 0,
+          seasonStats: { goals: 0, assists: 0, yellowCards: 0, matchesPlayed: 0 },
         };
         players[player.id] = player;
         playerIds.push(player.id);

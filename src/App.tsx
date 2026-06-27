@@ -8,6 +8,7 @@ import TransfersScreen from './screens/TransfersScreen';
 import MatchSimScreen from './screens/MatchSimScreen';
 import LeagueTableScreen from './screens/LeagueTableScreen';
 import EndOfSeasonScreen from './screens/EndOfSeasonScreen';
+import TeamViewScreen from './screens/TeamViewScreen';
 
 function App() {
   const screen = useGameStore((s) => s.screen);
@@ -31,6 +32,8 @@ function App() {
       return <LeagueTableScreen />;
     case 'endOfSeason':
       return <EndOfSeasonScreen />;
+    case 'teamView':
+      return <TeamViewScreen />;
     default:
       return <MainMenuScreen />;
   }
