@@ -2,7 +2,7 @@ import { Team, Player, MatchResult, MatchEvent, MatchStatEvent, TeamMatchStats, 
 import { FORMATIONS, POSITION_GROUPS } from '../utils/constants';
 import { createRng, randomInt, weightedRandom, poissonRandom } from '../utils/random';
 import { getEffectiveOVR } from './rating';
-import { TACTIC_MODIFIERS } from './tactics';
+import { TACTIC_DEFINITIONS, calculateTacticFit, getCounterModifier } from './tactics';
 
 function getPlayersInGroup(
   playerIds: string[],
@@ -76,13 +76,31 @@ export function simulateMatch(
   awayAttackStr = (awayAttackStr + awayMidStr) / 2;
   awayDefenseStr = (awayDefenseStr + awayMidStr) / 2;
 
+  // Player lists for tactic fit and goal events
+  const homePlayerList = homeStarting.map(id => players[id]).filter(Boolean);
+  const awayPlayerList = awayStarting.map(id => players[id]).filter(Boolean);
+
   // Tactic modifiers
-  const homeTactic = TACTIC_MODIFIERS[home.tactics.tactic];
-  const awayTactic = TACTIC_MODIFIERS[away.tactics.tactic];
-  homeAttackStr *= homeTactic.attackMult;
-  homeDefenseStr *= homeTactic.defenseMult;
-  awayAttackStr *= awayTactic.attackMult;
-  awayDefenseStr *= awayTactic.defenseMult;
+  const homeTacticDef = TACTIC_DEFINITIONS[home.tactics.tactic];
+  const awayTacticDef = TACTIC_DEFINITIONS[away.tactics.tactic];
+  homeAttackStr *= homeTacticDef.attackMult;
+  homeDefenseStr *= homeTacticDef.defenseMult;
+  awayAttackStr *= awayTacticDef.attackMult;
+  awayDefenseStr *= awayTacticDef.defenseMult;
+
+  // Tactic fit
+  const homeFit = calculateTacticFit(homePlayerList, homeTacticDef);
+  const awayFit = calculateTacticFit(awayPlayerList, awayTacticDef);
+  homeAttackStr *= homeFit;
+  homeDefenseStr *= homeFit;
+  awayAttackStr *= awayFit;
+  awayDefenseStr *= awayFit;
+
+  // Counter bonus
+  const homeCounterMod = getCounterModifier(home.tactics.tactic, away.tactics.tactic);
+  const awayCounterMod = getCounterModifier(away.tactics.tactic, home.tactics.tactic);
+  homeAttackStr *= homeCounterMod;
+  awayAttackStr *= awayCounterMod;
 
   // Home advantage
   homeAttackStr *= 1 + (home.homeAdvantage * 0.01);
@@ -100,8 +118,6 @@ export function simulateMatch(
   const events: MatchEvent[] = [];
 
   // Generate goal events
-  const homePlayerList = homeStarting.map(id => players[id]).filter(Boolean);
-  const awayPlayerList = awayStarting.map(id => players[id]).filter(Boolean);
 
   function generateGoalEvents(goals: number, teamId: string, teamPlayers: Player[]): void {
     for (let i = 0; i < goals; i++) {

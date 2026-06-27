@@ -9,6 +9,7 @@ import { simulateMatch } from '../engine/match-sim';
 import { drainStamina, recoverStamina } from '../engine/stamina';
 import { handlePromotion, advancePlayerAge, updateBudgets } from '../engine/season';
 import { buyPlayer, sellPlayer, canAffordPlayer } from '../engine/transfer';
+import { getBestTacticForSquad } from '../engine/tactics';
 import { calculateOVR } from '../engine/rating';
 import { FORMATIONS } from '../utils/constants';
 
@@ -17,11 +18,8 @@ export type ScreenName =
   | 'leagueSelect'
   | 'teamSelect'
   | 'squad'
-  | 'startingEleven'
   | 'playerProfile'
-  | 'tactics'
   | 'transfers'
-  | 'fixtures'
   | 'matchSim'
   | 'leagueTable'
   | 'endOfSeason';
@@ -152,6 +150,11 @@ export const useGameStore = create<GameState>()(
               );
               state.teams[team.id].startingElevenIds = startingIds;
               state.teams[team.id].substituteBenchIds = subIds;
+
+              if (!team.isPlayerControlled) {
+                const squadPlayers = team.playerIds.map(id => state.players[id]).filter(Boolean);
+                state.teams[team.id].tactics.tactic = getBestTacticForSquad(squadPlayers);
+              }
             }
 
             state.screen = 'squad';
@@ -334,6 +337,11 @@ export const useGameStore = create<GameState>()(
               );
               state.teams[team.id].startingElevenIds = startingIds;
               state.teams[team.id].substituteBenchIds = subIds;
+
+              if (!team.isPlayerControlled) {
+                const squadPlayers = team.playerIds.map(id => state.players[id]).filter(Boolean);
+                state.teams[team.id].tactics.tactic = getBestTacticForSquad(squadPlayers);
+              }
             }
 
             state.screen = 'squad';
@@ -372,6 +380,7 @@ export const useGameStore = create<GameState>()(
       }),
       {
         name: 'champion-manager-save',
+        version: 2,
         partialize: (state) => ({
           players: state.players,
           teams: state.teams,
@@ -381,6 +390,18 @@ export const useGameStore = create<GameState>()(
           selectedLeagueId: state.selectedLeagueId,
           freeAgentIds: state.freeAgentIds,
         }),
+        migrate: (persisted: unknown, version: number) => {
+          const state = persisted as Record<string, unknown>;
+          if (version < 2 && state.teams) {
+            const tacticMap: Record<string, string> = { balanced: 'tikiTaka', attack: 'gegenpressing', defense: 'parkTheBus' };
+            for (const team of Object.values(state.teams as Record<string, { tactics: { tactic: string } }>)) {
+              if (tacticMap[team.tactics.tactic]) {
+                team.tactics.tactic = tacticMap[team.tactics.tactic];
+              }
+            }
+          }
+          return state as unknown as GameState;
+        },
       }
     )
   )

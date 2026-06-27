@@ -101,7 +101,7 @@ export function loadGameData(): {
         playerIds,
         startingElevenIds: [],
         substituteBenchIds: [],
-        tactics: { formation: '4-4-2', tactic: 'balanced' },
+        tactics: { formation: '4-4-2', tactic: 'direktOyun' },
         transferBudget: rawTeam.transferBudget,
         wageBudget: Math.max(rawTeam.wageBudget, Math.round(totalWage * 1.2)),
         currentWageTotal: totalWage,
