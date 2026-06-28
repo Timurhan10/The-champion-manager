@@ -12534,6 +12534,822 @@
           "marketValue": 1872852
         }
       ]
+    },
+    {
+      "id": "konyaspor",
+      "name": "Konyaspor",
+      "shortName": "KON",
+      "city": "Konya",
+      "colors": {
+        "primary": "#006400",
+        "secondary": "#FFFFFF"
+      },
+      "transferBudget": 7000000,
+      "wageBudget": 814940,
+      "homeAdvantage": 7,
+      "reputation": 55,
+      "players": [
+        {
+          "id": "konyaspor-001",
+          "name": "Bahadır Güngördü",
+          "age": 30,
+          "nationality": "Türkiye",
+          "position": "GK",
+          "secondaryPositions": [],
+          "attributes": {
+            "speed": 78,
+            "shooting": 62,
+            "passing": 79,
+            "dribbling": 72,
+            "defense": 81,
+            "physics": 73,
+            "stamina": 69,
+            "intelligence": 77
+          },
+          "wage": 17526,
+          "marketValue": 2769054
+        },
+        {
+          "id": "konyaspor-002",
+          "name": "Deniz Ertaş",
+          "age": 21,
+          "nationality": "Türkiye",
+          "position": "GK",
+          "secondaryPositions": [],
+          "attributes": {
+            "speed": 78,
+            "shooting": 62,
+            "passing": 64,
+            "dribbling": 63,
+            "defense": 66,
+            "physics": 77,
+            "stamina": 67,
+            "intelligence": 80
+          },
+          "wage": 17295,
+          "marketValue": 2475811
+        },
+        {
+          "id": "konyaspor-003",
+          "name": "Egemen Aydın",
+          "age": 19,
+          "nationality": "Türkiye",
+          "position": "GK",
+          "secondaryPositions": [],
+          "attributes": {
+            "speed": 68,
+            "shooting": 67,
+            "passing": 55,
+            "dribbling": 53,
+            "defense": 65,
+            "physics": 61,
+            "stamina": 61,
+            "intelligence": 63
+          },
+          "wage": 15000,
+          "marketValue": 1868976
+        },
+        {
+          "id": "konyaspor-004",
+          "name": "Yhoan Andzouana",
+          "age": 30,
+          "nationality": "Türkiye",
+          "position": "CB",
+          "secondaryPositions": [],
+          "attributes": {
+            "speed": 79,
+            "shooting": 76,
+            "passing": 73,
+            "dribbling": 66,
+            "defense": 69,
+            "physics": 81,
+            "stamina": 73,
+            "intelligence": 72
+          },
+          "wage": 19082,
+          "marketValue": 2735727
+        },
+        {
+          "id": "konyaspor-005",
+          "name": "Adil Demirbağ",
+          "age": 29,
+          "nationality": "Türkiye",
+          "position": "CB",
+          "secondaryPositions": [],
+          "attributes": {
+            "speed": 68,
+            "shooting": 68,
+            "passing": 72,
+            "dribbling": 71,
+            "defense": 79,
+            "physics": 76,
+            "stamina": 62,
+            "intelligence": 69
+          },
+          "wage": 15356,
+          "marketValue": 2540887
+        },
+        {
+          "id": "konyaspor-006",
+          "name": "Guilherme Haubert Sitya",
+          "age": 36,
+          "nationality": "Türkiye",
+          "position": "CB",
+          "secondaryPositions": [],
+          "attributes": {
+            "speed": 51,
+            "shooting": 62,
+            "passing": 46,
+            "dribbling": 50,
+            "defense": 61,
+            "physics": 72,
+            "stamina": 63,
+            "intelligence": 71
+          },
+          "wage": 16192,
+          "marketValue": 1927228
+        },
+        {
+          "id": "konyaspor-007",
+          "name": "Riechedly Bazoer",
+          "age": 30,
+          "nationality": "Türkiye",
+          "position": "LB",
+          "secondaryPositions": [],
+          "attributes": {
+            "speed": 87,
+            "shooting": 63,
+            "passing": 77,
+            "dribbling": 74,
+            "defense": 67,
+            "physics": 65,
+            "stamina": 73,
+            "intelligence": 69
+          },
+          "wage": 18861,
+          "marketValue": 2594149
+        },
+        {
+          "id": "konyaspor-008",
+          "name": "Yasir Subaşı",
+          "age": 31,
+          "nationality": "Türkiye",
+          "position": "RB",
+          "secondaryPositions": [],
+          "attributes": {
+            "speed": 71,
+            "shooting": 61,
+            "passing": 62,
+            "dribbling": 65,
+            "defense": 79,
+            "physics": 75,
+            "stamina": 77,
+            "intelligence": 60
+          },
+          "wage": 14209,
+          "marketValue": 2354197
+        },
+        {
+          "id": "konyaspor-009",
+          "name": "Arif Boşluk",
+          "age": 23,
+          "nationality": "Türkiye",
+          "position": "CB",
+          "secondaryPositions": [],
+          "attributes": {
+            "speed": 69,
+            "shooting": 60,
+            "passing": 64,
+            "dribbling": 78,
+            "defense": 81,
+            "physics": 66,
+            "stamina": 75,
+            "intelligence": 75
+          },
+          "wage": 17462,
+          "marketValue": 2600798
+        },
+        {
+          "id": "konyaspor-010",
+          "name": "Adamo Nagalo",
+          "age": 24,
+          "nationality": "Türkiye",
+          "position": "LB",
+          "secondaryPositions": [],
+          "attributes": {
+            "speed": 60,
+            "shooting": 60,
+            "passing": 68,
+            "dribbling": 59,
+            "defense": 58,
+            "physics": 58,
+            "stamina": 65,
+            "intelligence": 66
+          },
+          "wage": 15093,
+          "marketValue": 2013360
+        },
+        {
+          "id": "konyaspor-011",
+          "name": "Josip Calusic",
+          "age": 33,
+          "nationality": "Türkiye",
+          "position": "RB",
+          "secondaryPositions": [],
+          "attributes": {
+            "speed": 69,
+            "shooting": 63,
+            "passing": 60,
+            "dribbling": 61,
+            "defense": 71,
+            "physics": 65,
+            "stamina": 64,
+            "intelligence": 67
+          },
+          "wage": 15065,
+          "marketValue": 2194161
+        },
+        {
+          "id": "konyaspor-012",
+          "name": "Rayyan Baniya",
+          "age": 27,
+          "nationality": "Türkiye",
+          "position": "CB",
+          "secondaryPositions": [],
+          "attributes": {
+            "speed": 65,
+            "shooting": 64,
+            "passing": 74,
+            "dribbling": 69,
+            "defense": 80,
+            "physics": 89,
+            "stamina": 75,
+            "intelligence": 71
+          },
+          "wage": 16172,
+          "marketValue": 2727528
+        },
+        {
+          "id": "konyaspor-013",
+          "name": "Ata Yanık",
+          "age": 17,
+          "nationality": "Türkiye",
+          "position": "CB",
+          "secondaryPositions": [],
+          "attributes": {
+            "speed": 55,
+            "shooting": 61,
+            "passing": 70,
+            "dribbling": 70,
+            "defense": 60,
+            "physics": 62,
+            "stamina": 65,
+            "intelligence": 77
+          },
+          "wage": 16834,
+          "marketValue": 2165882
+        },
+        {
+          "id": "konyaspor-014",
+          "name": "Ahmet Tırpancı",
+          "age": 19,
+          "nationality": "Türkiye",
+          "position": "CB",
+          "secondaryPositions": [],
+          "attributes": {
+            "speed": 70,
+            "shooting": 58,
+            "passing": 65,
+            "dribbling": 67,
+            "defense": 61,
+            "physics": 68,
+            "stamina": 67,
+            "intelligence": 59
+          },
+          "wage": 15720,
+          "marketValue": 2145630
+        },
+        {
+          "id": "konyaspor-015",
+          "name": "Egehan Şensoy",
+          "age": 18,
+          "nationality": "Türkiye",
+          "position": "LB",
+          "secondaryPositions": [],
+          "attributes": {
+            "speed": 50,
+            "shooting": 44,
+            "passing": 53,
+            "dribbling": 53,
+            "defense": 66,
+            "physics": 56,
+            "stamina": 62,
+            "intelligence": 57
+          },
+          "wage": 13874,
+          "marketValue": 1637930
+        },
+        {
+          "id": "konyaspor-016",
+          "name": "Enis Bardhi",
+          "age": 31,
+          "nationality": "Türkiye",
+          "position": "CDM",
+          "secondaryPositions": [],
+          "attributes": {
+            "speed": 58,
+            "shooting": 64,
+            "passing": 59,
+            "dribbling": 55,
+            "defense": 63,
+            "physics": 67,
+            "stamina": 53,
+            "intelligence": 62
+          },
+          "wage": 13137,
+          "marketValue": 1989840
+        },
+        {
+          "id": "konyaspor-017",
+          "name": "Morten Bjørlo",
+          "age": 31,
+          "nationality": "Türkiye",
+          "position": "CM",
+          "secondaryPositions": [],
+          "attributes": {
+            "speed": 63,
+            "shooting": 62,
+            "passing": 70,
+            "dribbling": 52,
+            "defense": 62,
+            "physics": 54,
+            "stamina": 61,
+            "intelligence": 76
+          },
+          "wage": 16701,
+          "marketValue": 1930347
+        },
+        {
+          "id": "konyaspor-018",
+          "name": "Melih İbrahimoğlu",
+          "age": 26,
+          "nationality": "Türkiye",
+          "position": "CM",
+          "secondaryPositions": [],
+          "attributes": {
+            "speed": 74,
+            "shooting": 60,
+            "passing": 78,
+            "dribbling": 74,
+            "defense": 75,
+            "physics": 70,
+            "stamina": 65,
+            "intelligence": 78
+          },
+          "wage": 18003,
+          "marketValue": 2556245
+        },
+        {
+          "id": "konyaspor-019",
+          "name": "Uğurcan Yazğılı",
+          "age": 27,
+          "nationality": "Türkiye",
+          "position": "CAM",
+          "secondaryPositions": [],
+          "attributes": {
+            "speed": 68,
+            "shooting": 80,
+            "passing": 90,
+            "dribbling": 79,
+            "defense": 82,
+            "physics": 84,
+            "stamina": 78,
+            "intelligence": 74
+          },
+          "wage": 16941,
+          "marketValue": 3148177
+        },
+        {
+          "id": "konyaspor-020",
+          "name": "Marko Jevtovic",
+          "age": 33,
+          "nationality": "Türkiye",
+          "position": "LW",
+          "secondaryPositions": [],
+          "attributes": {
+            "speed": 62,
+            "shooting": 82,
+            "passing": 72,
+            "dribbling": 71,
+            "defense": 66,
+            "physics": 71,
+            "stamina": 71,
+            "intelligence": 70
+          },
+          "wage": 18336,
+          "marketValue": 2615467
+        },
+        {
+          "id": "konyaspor-021",
+          "name": "Jin-Ho Jo",
+          "age": 23,
+          "nationality": "Türkiye",
+          "position": "RW",
+          "secondaryPositions": [],
+          "attributes": {
+            "speed": 88,
+            "shooting": 65,
+            "passing": 61,
+            "dribbling": 85,
+            "defense": 67,
+            "physics": 73,
+            "stamina": 77,
+            "intelligence": 79
+          },
+          "wage": 14820,
+          "marketValue": 2849060
+        },
+        {
+          "id": "konyaspor-022",
+          "name": "Berkan İsmail Kutlu",
+          "age": 28,
+          "nationality": "Türkiye",
+          "position": "LM",
+          "secondaryPositions": [],
+          "attributes": {
+            "speed": 84,
+            "shooting": 59,
+            "passing": 67,
+            "dribbling": 68,
+            "defense": 69,
+            "physics": 67,
+            "stamina": 73,
+            "intelligence": 56
+          },
+          "wage": 16855,
+          "marketValue": 2328095
+        },
+        {
+          "id": "konyaspor-023",
+          "name": "Deniz Türüç",
+          "age": 33,
+          "nationality": "Türkiye",
+          "position": "RM",
+          "secondaryPositions": [],
+          "attributes": {
+            "speed": 68,
+            "shooting": 74,
+            "passing": 79,
+            "dribbling": 70,
+            "defense": 79,
+            "physics": 67,
+            "stamina": 62,
+            "intelligence": 68
+          },
+          "wage": 14744,
+          "marketValue": 2636448
+        },
+        {
+          "id": "konyaspor-024",
+          "name": "Sander Svendsen",
+          "age": 29,
+          "nationality": "Türkiye",
+          "position": "CDM",
+          "secondaryPositions": [],
+          "attributes": {
+            "speed": 53,
+            "shooting": 67,
+            "passing": 73,
+            "dribbling": 67,
+            "defense": 63,
+            "physics": 67,
+            "stamina": 69,
+            "intelligence": 56
+          },
+          "wage": 14742,
+          "marketValue": 2153211
+        },
+        {
+          "id": "konyaspor-025",
+          "name": "Diogo Antonio Cupido Gonçalves",
+          "age": 29,
+          "nationality": "Türkiye",
+          "position": "CM",
+          "secondaryPositions": [],
+          "attributes": {
+            "speed": 65,
+            "shooting": 63,
+            "passing": 67,
+            "dribbling": 71,
+            "defense": 68,
+            "physics": 70,
+            "stamina": 74,
+            "intelligence": 73
+          },
+          "wage": 17216,
+          "marketValue": 2359223
+        },
+        {
+          "id": "konyaspor-026",
+          "name": "İsmail Esat Buğa",
+          "age": 20,
+          "nationality": "Türkiye",
+          "position": "CM",
+          "secondaryPositions": [],
+          "attributes": {
+            "speed": 58,
+            "shooting": 55,
+            "passing": 61,
+            "dribbling": 61,
+            "defense": 62,
+            "physics": 66,
+            "stamina": 54,
+            "intelligence": 68
+          },
+          "wage": 14440,
+          "marketValue": 1826050
+        },
+        {
+          "id": "konyaspor-027",
+          "name": "Ahmet Kusay Dağdevir",
+          "age": 20,
+          "nationality": "Türkiye",
+          "position": "CAM",
+          "secondaryPositions": [],
+          "attributes": {
+            "speed": 62,
+            "shooting": 71,
+            "passing": 55,
+            "dribbling": 64,
+            "defense": 65,
+            "physics": 50,
+            "stamina": 53,
+            "intelligence": 64
+          },
+          "wage": 13720,
+          "marketValue": 1950879
+        },
+        {
+          "id": "konyaspor-028",
+          "name": "Ömer Çobanoğlu",
+          "age": 19,
+          "nationality": "Türkiye",
+          "position": "LW",
+          "secondaryPositions": [],
+          "attributes": {
+            "speed": 64,
+            "shooting": 67,
+            "passing": 48,
+            "dribbling": 52,
+            "defense": 62,
+            "physics": 50,
+            "stamina": 54,
+            "intelligence": 53
+          },
+          "wage": 12499,
+          "marketValue": 1704584
+        },
+        {
+          "id": "konyaspor-029",
+          "name": "Eren Doğan",
+          "age": 18,
+          "nationality": "Türkiye",
+          "position": "RW",
+          "secondaryPositions": [],
+          "attributes": {
+            "speed": 54,
+            "shooting": 60,
+            "passing": 67,
+            "dribbling": 66,
+            "defense": 61,
+            "physics": 50,
+            "stamina": 61,
+            "intelligence": 59
+          },
+          "wage": 13369,
+          "marketValue": 1872656
+        },
+        {
+          "id": "konyaspor-030",
+          "name": "Ufuk Akyol",
+          "age": 29,
+          "nationality": "Türkiye",
+          "position": "LM",
+          "secondaryPositions": [],
+          "attributes": {
+            "speed": 72,
+            "shooting": 75,
+            "passing": 85,
+            "dribbling": 90,
+            "defense": 75,
+            "physics": 73,
+            "stamina": 74,
+            "intelligence": 78
+          },
+          "wage": 16708,
+          "marketValue": 3075803
+        },
+        {
+          "id": "konyaspor-031",
+          "name": "Efe Seçil",
+          "age": 17,
+          "nationality": "Türkiye",
+          "position": "RM",
+          "secondaryPositions": [],
+          "attributes": {
+            "speed": 72,
+            "shooting": 56,
+            "passing": 75,
+            "dribbling": 58,
+            "defense": 58,
+            "physics": 68,
+            "stamina": 69,
+            "intelligence": 69
+          },
+          "wage": 13521,
+          "marketValue": 2237749
+        },
+        {
+          "id": "konyaspor-032",
+          "name": "Jackson Muleka",
+          "age": 27,
+          "nationality": "Türkiye",
+          "position": "ST",
+          "secondaryPositions": [],
+          "attributes": {
+            "speed": 67,
+            "shooting": 65,
+            "passing": 63,
+            "dribbling": 65,
+            "defense": 61,
+            "physics": 57,
+            "stamina": 66,
+            "intelligence": 72
+          },
+          "wage": 16536,
+          "marketValue": 2174260
+        },
+        {
+          "id": "konyaspor-033",
+          "name": "Muhammet Tunahan Taşçı",
+          "age": 24,
+          "nationality": "Türkiye",
+          "position": "ST",
+          "secondaryPositions": [],
+          "attributes": {
+            "speed": 64,
+            "shooting": 64,
+            "passing": 70,
+            "dribbling": 72,
+            "defense": 63,
+            "physics": 61,
+            "stamina": 68,
+            "intelligence": 54
+          },
+          "wage": 16819,
+          "marketValue": 2087437
+        },
+        {
+          "id": "konyaspor-034",
+          "name": "Kazeem Olaigbe",
+          "age": 24,
+          "nationality": "Türkiye",
+          "position": "ST",
+          "secondaryPositions": [],
+          "attributes": {
+            "speed": 74,
+            "shooting": 63,
+            "passing": 58,
+            "dribbling": 66,
+            "defense": 58,
+            "physics": 64,
+            "stamina": 56,
+            "intelligence": 63
+          },
+          "wage": 14461,
+          "marketValue": 2080958
+        },
+        {
+          "id": "konyaspor-035",
+          "name": "Blaz Kramer",
+          "age": 30,
+          "nationality": "Türkiye",
+          "position": "ST",
+          "secondaryPositions": [],
+          "attributes": {
+            "speed": 67,
+            "shooting": 68,
+            "passing": 67,
+            "dribbling": 81,
+            "defense": 69,
+            "physics": 63,
+            "stamina": 60,
+            "intelligence": 59
+          },
+          "wage": 16029,
+          "marketValue": 2261370
+        },
+        {
+          "id": "konyaspor-036",
+          "name": "Marius Ştefanescu",
+          "age": 28,
+          "nationality": "Türkiye",
+          "position": "ST",
+          "secondaryPositions": [],
+          "attributes": {
+            "speed": 73,
+            "shooting": 85,
+            "passing": 66,
+            "dribbling": 73,
+            "defense": 64,
+            "physics": 65,
+            "stamina": 69,
+            "intelligence": 61
+          },
+          "wage": 17556,
+          "marketValue": 2440401
+        },
+        {
+          "id": "konyaspor-037",
+          "name": "Eren Cemali Yağmur",
+          "age": 19,
+          "nationality": "Türkiye",
+          "position": "ST",
+          "secondaryPositions": [],
+          "attributes": {
+            "speed": 57,
+            "shooting": 63,
+            "passing": 65,
+            "dribbling": 72,
+            "defense": 68,
+            "physics": 55,
+            "stamina": 46,
+            "intelligence": 57
+          },
+          "wage": 13245,
+          "marketValue": 1811846
+        },
+        {
+          "id": "konyaspor-038",
+          "name": "Enes Ilyas Seven",
+          "age": 19,
+          "nationality": "Türkiye",
+          "position": "ST",
+          "secondaryPositions": [],
+          "attributes": {
+            "speed": 69,
+            "shooting": 72,
+            "passing": 56,
+            "dribbling": 63,
+            "defense": 74,
+            "physics": 72,
+            "stamina": 64,
+            "intelligence": 69
+          },
+          "wage": 16311,
+          "marketValue": 2438734
+        },
+        {
+          "id": "konyaspor-039",
+          "name": "Tuncay Elgün",
+          "age": 19,
+          "nationality": "Türkiye",
+          "position": "ST",
+          "secondaryPositions": [],
+          "attributes": {
+            "speed": 58,
+            "shooting": 53,
+            "passing": 44,
+            "dribbling": 59,
+            "defense": 47,
+            "physics": 60,
+            "stamina": 47,
+            "intelligence": 55
+          },
+          "wage": 12591,
+          "marketValue": 1435923
+        },
+        {
+          "id": "konyaspor-040",
+          "name": "Muhammed Arda Var",
+          "age": 18,
+          "nationality": "Türkiye",
+          "position": "ST",
+          "secondaryPositions": [],
+          "attributes": {
+            "speed": 64,
+            "shooting": 57,
+            "passing": 54,
+            "dribbling": 62,
+            "defense": 64,
+            "physics": 53,
+            "stamina": 57,
+            "intelligence": 62
+          },
+          "wage": 13836,
+          "marketValue": 1855543
+        }
+      ]
     }
   ]
 }

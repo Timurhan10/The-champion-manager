@@ -160,7 +160,7 @@ export const COUNTRIES: Country[] = [
     { id: 'ch-1', name: 'Swiss Super League', tier: 1, teamCount: 12 },
   ]},
   { id: 'TR', name: 'Türkiye', flag: '🇹🇷', continent: 'europe', namePoolRegion: 'turkic', leagues: [
-    { id: 'super-lig', name: 'Trendyol Süper Lig', tier: 1, teamCount: 17 },
+    { id: 'super-lig', name: 'Trendyol Süper Lig', tier: 1, teamCount: 18 },
     { id: '1-lig', name: 'TFF 1. Lig', tier: 2, teamCount: 18 },
     { id: 'tr-3', name: 'TFF 2. Lig', tier: 3, teamCount: 18 },
   ]},
