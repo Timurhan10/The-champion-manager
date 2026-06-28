@@ -12,10 +12,12 @@ import { buyPlayer, sellPlayer, canAffordPlayer, evaluateTransferOffer, generate
 import { getBestTacticForSquad } from '../engine/tactics';
 import { applyTraining, TrainingType, TrainingResult } from '../engine/training';
 import { generateYouthPlayersForTeam, applyPlayerDevelopment } from '../engine/youth';
+import { getCountry } from '../data/countries';
 import { FORMATIONS } from '../utils/constants';
 
 export type ScreenName =
   | 'mainMenu'
+  | 'countrySelect'
   | 'leagueSelect'
   | 'teamSelect'
   | 'squad'
@@ -38,13 +40,14 @@ export interface GameState {
   selectedPlayerId: string | null;
   lastMatchResult: MatchResult | null;
   selectedTeamId: string | null;
+  selectedCountryId: string | null;
   pendingOffers: TransferOffer[];
   notifications: Notification[];
   lastTrainingResults: TrainingResult[];
 
   navigate: (screen: ScreenName) => void;
   selectPlayer: (playerId: string | null) => void;
-  startNewGame: (leagueId: string, teamId: string) => void;
+  startNewGame: (countryId: string, leagueId: string, teamId: string) => void;
   setStartingEleven: (playerIds: string[]) => void;
   setSubstitutes: (playerIds: string[]) => void;
   setFormation: (formation: Formation) => void;
@@ -120,6 +123,7 @@ export const useGameStore = create<GameState>()(
         selectedPlayerId: null,
         lastMatchResult: null,
         selectedTeamId: null,
+        selectedCountryId: null,
         pendingOffers: [],
         notifications: [],
         lastTrainingResults: [],
@@ -140,15 +144,16 @@ export const useGameStore = create<GameState>()(
             state.screen = 'teamView';
           }),
 
-        startNewGame: (leagueId, teamId) =>
+        startNewGame: (countryId, leagueId, teamId) =>
           set((state) => {
-            const data = loadGameData();
+            const data = loadGameData(countryId);
             state.players = data.players;
             state.teams = data.teams;
             state.leagues = data.leagues;
             state.freeAgentIds = data.freeAgentIds;
             state.playerTeamId = teamId;
             state.selectedLeagueId = leagueId;
+            state.selectedCountryId = countryId;
             state.teams[teamId].isPlayerControlled = true;
             state.pendingOffers = [];
             state.notifications = [];
@@ -472,7 +477,8 @@ export const useGameStore = create<GameState>()(
             for (let i = 0; i < allTeamIds.length; i++) {
               const teamId = allTeamIds[i];
               const team = state.teams[teamId];
-              const youthPlayers = generateYouthPlayersForTeam(teamId, state.season.year, i);
+              const countryInfo = getCountry(state.selectedCountryId || 'TR');
+              const youthPlayers = generateYouthPlayersForTeam(teamId, state.season.year, i, countryInfo?.namePoolRegion || 'turkic');
               for (const youth of youthPlayers) {
                 state.players[youth.id] = youth;
                 team.playerIds.push(youth.id);
@@ -567,7 +573,7 @@ export const useGameStore = create<GameState>()(
       }),
       {
         name: 'champion-manager-save',
-        version: 3,
+        version: 4,
         partialize: (state) => ({
           players: state.players,
           teams: state.teams,
@@ -575,6 +581,7 @@ export const useGameStore = create<GameState>()(
           season: state.season,
           playerTeamId: state.playerTeamId,
           selectedLeagueId: state.selectedLeagueId,
+          selectedCountryId: state.selectedCountryId,
           freeAgentIds: state.freeAgentIds,
           pendingOffers: state.pendingOffers,
           notifications: state.notifications,
@@ -589,7 +596,7 @@ export const useGameStore = create<GameState>()(
               }
             }
           }
-          if (version < 3) {
+          if (version < 3 || version < 4) {
             if (state.players) {
               for (const player of Object.values(state.players as Record<string, Record<string, unknown>>)) {
                 if (player.consecutiveStarts === undefined) player.consecutiveStarts = 0;
@@ -602,6 +609,12 @@ export const useGameStore = create<GameState>()(
             }
             if (!state.pendingOffers) state.pendingOffers = [];
             if (!state.notifications) state.notifications = [];
+            if (!state.selectedCountryId) state.selectedCountryId = 'TR';
+            if (state.leagues) {
+              for (const league of Object.values(state.leagues as Record<string, Record<string, unknown>>)) {
+                if (!league.countryId) league.countryId = 'TR';
+              }
+            }
           }
           return state as unknown as GameState;
         },

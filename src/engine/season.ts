@@ -6,39 +6,37 @@ export function handlePromotion(
   teams: Record<string, Team>
 ): { promoted: string[]; relegated: string[] } {
   const leagueList = Object.values(leagues);
-  const tier1 = leagueList.find(l => l.tier === 1);
-  const tier2 = leagueList.find(l => l.tier === 2);
+  const tiers = leagueList.sort((a, b) => a.tier - b.tier);
 
-  if (!tier1 || !tier2) return { promoted: [], relegated: [] };
-
+  const promoted: string[] = [];
+  const relegated: string[] = [];
   const count = PROMOTION_RELEGATION_COUNT;
 
-  // Bottom N of tier 1 get relegated
-  const relegated = tier1.standings
-    .slice(-count)
-    .map(s => s.teamId);
+  for (let i = 0; i < tiers.length - 1; i++) {
+    const upper = tiers[i];
+    const lower = tiers[i + 1];
 
-  // Top N of tier 2 get promoted
-  const promoted = tier2.standings
-    .slice(0, count)
-    .map(s => s.teamId);
+    const relegatedIds = upper.standings.slice(-count).map(s => s.teamId);
+    const promotedIds = lower.standings.slice(0, count).map(s => s.teamId);
 
-  // Swap team league assignments
-  for (const teamId of relegated) {
-    const team = teams[teamId];
-    if (team) {
-      tier1.teamIds = tier1.teamIds.filter(id => id !== teamId);
-      tier2.teamIds.push(teamId);
-      team.leagueId = tier2.id;
+    for (const teamId of relegatedIds) {
+      const team = teams[teamId];
+      if (team) {
+        upper.teamIds = upper.teamIds.filter(id => id !== teamId);
+        lower.teamIds.push(teamId);
+        team.leagueId = lower.id;
+        relegated.push(teamId);
+      }
     }
-  }
 
-  for (const teamId of promoted) {
-    const team = teams[teamId];
-    if (team) {
-      tier2.teamIds = tier2.teamIds.filter(id => id !== teamId);
-      tier1.teamIds.push(teamId);
-      team.leagueId = tier1.id;
+    for (const teamId of promotedIds) {
+      const team = teams[teamId];
+      if (team) {
+        lower.teamIds = lower.teamIds.filter(id => id !== teamId);
+        upper.teamIds.push(teamId);
+        team.leagueId = upper.id;
+        promoted.push(teamId);
+      }
     }
   }
 

@@ -1,5 +1,7 @@
 import { Player, Team, League, LeagueStanding } from '../types';
 import { calculateOVR } from '../engine/rating';
+import { getCountry } from './countries';
+import { generateCountryData, generateLeagueData } from './generators';
 import superligData from './superlig-teams.json';
 import birincligData from './birinclig-teams.json';
 
@@ -58,7 +60,7 @@ function initLeagueStandings(teamIds: string[]): LeagueStanding[] {
   }));
 }
 
-export function loadGameData(): {
+function loadTurkishData(): {
   players: Record<string, Player>;
   teams: Record<string, Team>;
   leagues: Record<string, League>;
@@ -118,11 +120,34 @@ export function loadGameData(): {
     leagues[leagueData.leagueId] = {
       id: leagueData.leagueId,
       name: leagueData.leagueName,
-      tier: leagueData.tier as 1 | 2,
+      tier: leagueData.tier as 1 | 2 | 3 | 4,
+      countryId: 'TR',
       teamIds,
       standings: initLeagueStandings(teamIds),
     };
   }
 
+  // Generate Turkish 3rd league procedurally
+  const country = getCountry('TR')!;
+  const tier3Meta = country.leagues.find(l => l.id === 'tr-3');
+  if (tier3Meta) {
+    const tier3 = generateLeagueData(country, tier3Meta, 999_000);
+    Object.assign(players, tier3.players);
+    Object.assign(teams, tier3.teams);
+    leagues[tier3.league.id] = tier3.league;
+  }
+
   return { players, teams, leagues, freeAgentIds: [] };
+}
+
+export function loadGameData(countryId: string = 'TR'): {
+  players: Record<string, Player>;
+  teams: Record<string, Team>;
+  leagues: Record<string, League>;
+  freeAgentIds: string[];
+} {
+  if (countryId === 'TR') {
+    return loadTurkishData();
+  }
+  return generateCountryData(countryId);
 }

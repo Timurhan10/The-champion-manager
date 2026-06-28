@@ -44,7 +44,7 @@ export default function MainMenuScreen() {
         {/* Butonlar */}
         <div className="flex flex-col gap-3 items-center w-full max-w-xs">
           <button
-            onClick={() => navigate('leagueSelect')}
+            onClick={() => navigate('countrySelect')}
             className="w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-lg transition-colors text-sm shadow-lg"
           >
             Yeni Oyun

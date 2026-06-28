@@ -1,5 +1,6 @@
 import { useGameStore } from './store/game-store';
 import MainMenuScreen from './screens/MainMenuScreen';
+import CountrySelectScreen from './screens/CountrySelectScreen';
 import LeagueSelectScreen from './screens/LeagueSelectScreen';
 import TeamSelectScreen from './screens/TeamSelectScreen';
 import SquadScreen from './screens/SquadScreen';
@@ -16,6 +17,8 @@ function App() {
   switch (screen) {
     case 'mainMenu':
       return <MainMenuScreen />;
+    case 'countrySelect':
+      return <CountrySelectScreen />;
     case 'leagueSelect':
       return <LeagueSelectScreen />;
     case 'teamSelect':

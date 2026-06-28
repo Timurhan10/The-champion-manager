@@ -1,18 +1,6 @@
 import { Player, Position, PlayerAttributes } from '../types';
 import { calculateOVR } from './rating';
-
-const TURKISH_FIRST_NAMES = [
-  'Arda', 'Berk', 'Can', 'Deniz', 'Emre', 'Furkan', 'Gökhan', 'Hakan', 'İlker', 'Kaan',
-  'Mehmet', 'Nuri', 'Oğuz', 'Ömer', 'Serkan', 'Tarık', 'Uğur', 'Volkan', 'Yusuf', 'Burak',
-  'Alperen', 'Batuhan', 'Cenk', 'Doruk', 'Enes', 'Ferdi', 'Güven', 'Halil', 'Kerem', 'Mert',
-  'Onur', 'Recep', 'Salih', 'Taha', 'Umut', 'Yiğit', 'Barış', 'Cengiz', 'Efe', 'Mustafa',
-];
-
-const TURKISH_LAST_NAMES = [
-  'Yılmaz', 'Kaya', 'Demir', 'Şahin', 'Çelik', 'Öztürk', 'Aydın', 'Özdemir', 'Arslan', 'Doğan',
-  'Kılıç', 'Aslan', 'Çetin', 'Koç', 'Kurt', 'Özkan', 'Şimşek', 'Polat', 'Korkmaz', 'Yıldırım',
-  'Erdoğan', 'Güneş', 'Aktaş', 'Yıldız', 'Aksoy', 'Bayrak', 'Kaplan', 'Acar', 'Tekin', 'Tunç',
-];
+import { getNamePool } from '../data/name-pools';
 
 const ALL_POSITIONS: Position[] = ['GK', 'CB', 'LB', 'RB', 'CDM', 'CM', 'CAM', 'LM', 'RM', 'LW', 'RW', 'ST'];
 
@@ -24,11 +12,12 @@ function seededRandom(seed: number): () => number {
   };
 }
 
-export function generateYouthPlayer(teamId: string, seed: number): Player {
+export function generateYouthPlayer(teamId: string, seed: number, namePoolRegion: string = 'turkic'): Player {
   const rng = seededRandom(seed);
 
-  const firstName = TURKISH_FIRST_NAMES[Math.floor(rng() * TURKISH_FIRST_NAMES.length)];
-  const lastName = TURKISH_LAST_NAMES[Math.floor(rng() * TURKISH_LAST_NAMES.length)];
+  const pool = getNamePool(namePoolRegion);
+  const firstName = pool.firstNames[Math.floor(rng() * pool.firstNames.length)];
+  const lastName = pool.lastNames[Math.floor(rng() * pool.lastNames.length)];
   const age = 17 + Math.floor(rng() * 3);
   const position = ALL_POSITIONS[Math.floor(rng() * ALL_POSITIONS.length)];
   const baseOVR = 40 + Math.floor(rng() * 16);
@@ -48,7 +37,7 @@ export function generateYouthPlayer(teamId: string, seed: number): Player {
     id: `youth_${teamId}_${seed}`,
     name: `${firstName} ${lastName}`,
     age,
-    nationality: 'TR',
+    nationality: namePoolRegion === 'turkic' ? 'TR' : namePoolRegion,
     position,
     secondaryPositions: [],
     attributes: attrs,
@@ -64,12 +53,12 @@ export function generateYouthPlayer(teamId: string, seed: number): Player {
   };
 }
 
-export function generateYouthPlayersForTeam(teamId: string, seasonYear: number, teamIndex: number): Player[] {
+export function generateYouthPlayersForTeam(teamId: string, seasonYear: number, teamIndex: number, namePoolRegion: string = 'turkic'): Player[] {
   const baseSeed = seasonYear * 100000 + teamIndex * 1000;
   const count = 1 + Math.floor(((baseSeed * 1664525 + 1013904223) & 0x7fffffff) / 0x7fffffff * 3);
   const players: Player[] = [];
   for (let i = 0; i < count; i++) {
-    players.push(generateYouthPlayer(teamId, baseSeed + i));
+    players.push(generateYouthPlayer(teamId, baseSeed + i, namePoolRegion));
   }
   return players;
 }
